@@ -2,4 +2,5 @@
 Dependencies:
  - GFX
  - JSON
+ - LWJGL
  - OpenCL
