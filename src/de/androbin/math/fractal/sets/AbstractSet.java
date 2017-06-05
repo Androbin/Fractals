@@ -10,7 +10,7 @@ public abstract class AbstractSet {
     executor = new CLExecutor( name );
   }
   
-  public abstract void setKernelArgs( final int index );
+  public abstract void setKernelArgs( int index );
   
-  public abstract void update( final double time );
+  public abstract void update( double time );
 }
