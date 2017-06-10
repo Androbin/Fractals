@@ -8,8 +8,8 @@ const double x, const double y, const unsigned int depth ) {
    const double cr = cx + cx;
    const double ci = cy + cy;
    
-   double zr = 0;
-   double zi = 0;
+   double zr = 0.0;
+   double zi = 0.0;
    
    double zr2 = zr * zr;
    double zi2 = zi * zi;

@@ -19,8 +19,11 @@ public final class JuliaSet extends AbstractSet {
   }
   
   @ Override
-  public void update( final double time ) {
-    px = Math.sin( time );
-    py = Math.cos( time );
+  public void update( final double x, final double y, final double t ) {
+    final double s = Math.sin( t );
+    final double c = Math.cos( t );
+    
+    px = s * y - c * x;
+    py = s * x + c * y;
   }
 }

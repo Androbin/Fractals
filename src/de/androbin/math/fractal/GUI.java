@@ -19,6 +19,8 @@ public final class GUI extends CustomPane {
   private boolean animate;
   private double speed;
   
+  private final Point mouse = new Point();
+  
   public GUI( final AbstractSet set ) {
     this( set, DEPTH );
   }
@@ -28,7 +30,7 @@ public final class GUI extends CustomPane {
     
     this.set = set;
     this.args = new Args( depth );
-    
+    this.animate = true;
     this.speed = 1.0;
     
     registerListeners();
@@ -82,6 +84,12 @@ public final class GUI extends CustomPane {
         args.scale *= a;
       }
     } );
+    addMouseMotionListener( new MouseMotionAdapter() {
+      @ Override
+      public void mouseMoved( MouseEvent e ) {
+        mouse.setLocation( e.getPoint() );
+      }
+    } );
   }
   
   @ Override
@@ -93,7 +101,11 @@ public final class GUI extends CustomPane {
   protected void update( final float delta ) {
     if ( animate ) {
       args.time += delta * speed * args.scale;
-      set.update( args.time );
+      
+      final double x = 2.0 * mouse.x / getWidth() - 1.0;
+      final double y = 2.0 * mouse.y / getHeight() - 1.0;
+      
+      set.update( x, y, args.time );
     }
     
     updateBuffer();

@@ -12,6 +12,6 @@ public final class MandelbrotSet extends AbstractSet {
   }
   
   @ Override
-  public void update( final double time ) {
+  public void update( final double x, final double y, final double t ) {
   }
 }
