@@ -1,6 +1,6 @@
-kernel void julia( global int* result, const unsigned int img_w, const unsigned int img_h, const double x, const double y,
-const double w, const double h, const unsigned int depth, const double px, const double py )
-{
+kernel void julia( global int* result, const unsigned int img_w, const unsigned int img_h,
+const double x, const double y, const double w, const double h, const unsigned int depth,
+const double px, const double py ) {
    const unsigned int itemId = get_global_id( 0 );
    
    const unsigned int size = img_w <= img_h ? img_w : img_h;
@@ -11,21 +11,19 @@ const double w, const double h, const unsigned int depth, const double px, const
    double zr = cx + cx;
    double zi = cy + cy;
    
-   double zrsqr = zr * zr;
-   double zisqr = zi * zi;
+   double zr2 = zr * zr;
+   double zi2 = zi * zi;
    
-   for ( unsigned long n = 0; n < depth; n++ )
-   {
+   for ( unsigned long n = 0; n < depth; n++ ) {
       zi = zr * zi;
       zi += zi;
       zi += py;
-      zr = zrsqr - zisqr + px;
+      zr = zr2 - zi2 + px;
       
-      zrsqr = zr * zr;
-      zisqr = zi * zi;
+      zr2 = zr * zr;
+      zi2 = zi * zi;
       
-      if ( zrsqr + zisqr >= 4 )
-      {
+      if ( zr2 + zi2 >= 4 ) {
          result[ itemId ] = n * 73;
          return;
       }
