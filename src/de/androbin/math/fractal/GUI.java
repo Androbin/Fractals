@@ -74,12 +74,16 @@ public final class GUI extends CustomPane {
       @ Override
       public void mouseWheelMoved( final MouseWheelEvent event ) {
         final int size = Math.min( getWidth(), getHeight() );
+        final double a = Math.exp( event.getPreciseWheelRotation() );
         
-        args.x += ( 2f * event.getX() / size - 1f ) * args.scale;
-        args.y += ( 2f * event.getY() / size - 1f ) * args.scale;
+        final double ds = args.scale * ( a - 1.0 );
+        args.x += ds * ( 1.0 - 2.0 * event.getX() / size );
+        args.y += ds * ( 1.0 - 2.0 * event.getY() / size );
+        args.scale *= a;
         
-        args.scale *= Math.exp( event.getPreciseWheelRotation() );
-        
+        // TODO(Androbin) fix multithreading hack
+        updateBuffer();
+        render();
         updateBuffer();
         render();
       }
