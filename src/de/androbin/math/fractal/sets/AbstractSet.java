@@ -8,6 +8,7 @@ public abstract class AbstractSet {
   
   public AbstractSet( final String name ) throws IOException {
     executor = new CLExecutor( name );
+    update( 0.0 );
   }
   
   public abstract void setKernelArgs( int index );

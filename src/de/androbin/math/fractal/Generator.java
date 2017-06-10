@@ -23,7 +23,7 @@ public final class Generator {
     clReleaseMemObject( mem );
   }
   
-  public void renderAbsolute( final int[] imageData, final int width, final int height,
+  public void render( final int[] imageData, final int width, final int height,
       final Args args ) {
     final int length = imageData.length;
     
@@ -37,34 +37,26 @@ public final class Generator {
       mem = createReadOnlyBuffer( length, Integer.BYTES );
     }
     
+    final int min = Math.min( width, height );
+    
+    final double x = args.x - args.scale + 1.0 - (double) width / min;
+    final double y = args.y - args.scale + 1.0 - (double) height / min;
+    
+    final double scale = 2.0 * args.scale / min;
+    
     final CLExecutor executor = set.executor;
     final CLKernel kernel = executor.kernel;
     kernel.setArg( 0, mem );
     kernel.setArg( 1, width );
-    kernel.setArg( 2, height );
-    kernel.setArg( 3, args.x );
-    kernel.setArg( 4, args.y );
-    kernel.setArg( 5, args.w );
-    kernel.setArg( 6, args.h );
-    kernel.setArg( 7, args.depth );
+    kernel.setArg( 2, scale );
+    kernel.setArg( 3, x );
+    kernel.setArg( 4, y );
+    kernel.setArg( 5, args.depth );
     
-    set.setKernelArgs( 8 );
+    set.setKernelArgs( 6 );
     executor.execute( length );
     
     readBuffer( mem, buffer );
     getBuffer( buffer, imageData );
-  }
-  
-  public void renderRelative( final int[] imageData, final int width, final int height,
-      final Args args ) {
-    final double size = 2 * args.scale;
-    
-    args.x -= args.scale;
-    args.y -= args.scale;
-    
-    args.w = size;
-    args.h = size;
-    
-    renderAbsolute( imageData, width, height, args );
   }
 }

@@ -16,7 +16,7 @@ public final class GUI extends CustomPane {
   
   private AbstractSet set;
   private final Args args;
-  
+  private boolean animate;
   private double speed;
   
   public GUI( final AbstractSet set ) {
@@ -66,7 +66,7 @@ public final class GUI extends CustomPane {
       @ Override
       public void keyReleased( final KeyEvent event ) {
         if ( event.getKeyCode() == VK_SPACE ) {
-          active ^= true;
+          animate ^= true;
         }
       }
     } );
@@ -80,12 +80,6 @@ public final class GUI extends CustomPane {
         args.x += ds * ( 1.0 - 2.0 * event.getX() / size );
         args.y += ds * ( 1.0 - 2.0 * event.getY() / size );
         args.scale *= a;
-        
-        // TODO(Androbin) fix multithreading hack
-        updateBuffer();
-        render();
-        updateBuffer();
-        render();
       }
     } );
   }
@@ -97,8 +91,11 @@ public final class GUI extends CustomPane {
   
   @ Override
   protected void update( final float delta ) {
-    args.time += delta * speed * args.scale;
-    set.update( args.time );
+    if ( animate ) {
+      args.time += delta * speed * args.scale;
+      set.update( args.time );
+    }
+    
     updateBuffer();
   }
   
@@ -112,6 +109,6 @@ public final class GUI extends CustomPane {
       imageData = ( (DataBufferInt) buffer.getRaster().getDataBuffer() ).getData();
     }
     
-    generator.renderRelative( imageData, buffer.getWidth(), buffer.getHeight(), new Args( args ) );
+    generator.render( imageData, buffer.getWidth(), buffer.getHeight(), args );
   }
 }
