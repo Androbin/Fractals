@@ -51,15 +51,15 @@ public final class GUI extends CustomPane {
       @ Override
       public void keyPressed( final KeyEvent event ) {
         switch ( event.getKeyCode() ) {
-          case VK_ESCAPE :
+          case VK_ESCAPE:
             running = false;
             break;
           
-          case VK_PLUS :
+          case VK_PLUS:
             speed *= Math.E;
             break;
           
-          case VK_MINUS :
+          case VK_MINUS:
             speed /= Math.E;
             break;
         }
