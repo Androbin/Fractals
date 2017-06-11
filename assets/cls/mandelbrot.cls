@@ -8,8 +8,8 @@ const double x, const double y, const unsigned int depth ) {
    const double cr = cx + cx;
    const double ci = cy + cy;
    
-   double zr = 0.0;
-   double zi = 0.0;
+   double zr = cr;
+   double zi = ci;
    
    double zr2 = zr * zr;
    double zi2 = zi * zi;
@@ -24,7 +24,7 @@ const double x, const double y, const unsigned int depth ) {
       zi2 = zi * zi;
       
       if ( zr2 + zi2 >= 4.0 ) {
-         result[ id ] = n * 73;
+         result[ id ] = n * 463141;
          return;
       }
    }

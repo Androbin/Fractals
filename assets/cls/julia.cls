@@ -21,7 +21,7 @@ const double x, const double y, const unsigned int depth, const double px, const
       zi2 = zi * zi;
       
       if ( zr2 + zi2 >= 4.0 ) {
-         result[ id ] = n * 73;
+         result[ id ] = n * 463141;
          return;
       }
    }
