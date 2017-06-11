@@ -11,11 +11,13 @@ import java.awt.image.*;
 
 public final class GUI extends CustomPane {
   private final Generator generator;
+  
   private BufferedImage buffer;
   private int[] imageData;
   
-  private AbstractSet set;
+  private final AbstractSet set;
   private final Args args;
+  
   private boolean animate;
   private double speed;
   
@@ -30,6 +32,7 @@ public final class GUI extends CustomPane {
     
     this.set = set;
     this.args = new Args( depth );
+    
     this.animate = true;
     this.speed = 1.0;
     
@@ -37,6 +40,15 @@ public final class GUI extends CustomPane {
     
     delayMilli = DELAY;
     start( "Fractals" );
+  }
+  
+  private void coverMemory() {
+    if ( buffer != null && buffer.getWidth() == getWidth() && buffer.getHeight() == getHeight() ) {
+      return;
+    }
+    
+    buffer = new BufferedImage( getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB );
+    imageData = ( (DataBufferInt) buffer.getRaster().getDataBuffer() ).getData();
   }
   
   @ Override
@@ -75,19 +87,21 @@ public final class GUI extends CustomPane {
     addMouseWheelListener( new MouseWheelListener() {
       @ Override
       public void mouseWheelMoved( final MouseWheelEvent event ) {
-        final int size = Math.min( getWidth(), getHeight() );
         final double a = Math.exp( event.getPreciseWheelRotation() );
-        
         final double ds = args.scale * ( a - 1.0 );
+        
+        final int size = Math.min( getWidth(), getHeight() );
+        
         args.x += ds * ( 1.0 - 2.0 * event.getX() / size );
         args.y += ds * ( 1.0 - 2.0 * event.getY() / size );
+        
         args.scale *= a;
       }
     } );
     addMouseMotionListener( new MouseMotionAdapter() {
       @ Override
-      public void mouseMoved( MouseEvent e ) {
-        mouse.setLocation( e.getPoint() );
+      public void mouseMoved( final MouseEvent event ) {
+        mouse.setLocation( event.getPoint() );
       }
     } );
   }
@@ -116,10 +130,7 @@ public final class GUI extends CustomPane {
       return;
     }
     
-    if ( buffer == null || buffer.getWidth() != getWidth() || buffer.getHeight() != getHeight() ) {
-      buffer = new BufferedImage( getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB );
-      imageData = ( (DataBufferInt) buffer.getRaster().getDataBuffer() ).getData();
-    }
+    coverMemory();
     
     generator.render( imageData, buffer.getWidth(), buffer.getHeight(), args );
   }
