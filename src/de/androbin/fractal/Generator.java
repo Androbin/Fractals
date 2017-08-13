@@ -1,10 +1,10 @@
-package de.androbin.math.fractal;
+package de.androbin.fractal;
 
 import static de.androbin.lwjgl.util.BufferUtil.*;
 import static de.androbin.opencl.CLBufferUtil.*;
 import static org.lwjgl.BufferUtils.*;
 import static org.lwjgl.opencl.CL10.*;
-import de.androbin.math.fractal.sets.*;
+import de.androbin.fractal.sets.*;
 import de.androbin.opencl.*;
 import java.nio.*;
 import org.lwjgl.opencl.*;

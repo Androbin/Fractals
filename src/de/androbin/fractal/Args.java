@@ -1,4 +1,4 @@
-package de.androbin.math.fractal;
+package de.androbin.fractal;
 
 public final class Args {
   public double x;

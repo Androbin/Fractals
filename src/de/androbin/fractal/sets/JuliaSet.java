@@ -1,4 +1,4 @@
-package de.androbin.math.fractal.sets;
+package de.androbin.fractal.sets;
 
 import java.io.*;
 import org.lwjgl.opencl.*;

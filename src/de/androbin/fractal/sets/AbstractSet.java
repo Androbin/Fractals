@@ -1,4 +1,4 @@
-package de.androbin.math.fractal.sets;
+package de.androbin.fractal.sets;
 
 import de.androbin.opencl.*;
 import java.io.*;

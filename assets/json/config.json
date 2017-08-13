@@ -6,8 +6,8 @@
 	
 	"gui":
 	{
+		"fps": 24,
 		"depth": 384,
-		"delay": 40,
 		
 		"title": "Fractals",
 	},
