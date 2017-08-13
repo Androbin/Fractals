@@ -1,3 +1,5 @@
+App-Shell
+App-Shell-AWT
 GFX
 JSON
 LWJGL
