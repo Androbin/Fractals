@@ -1,9 +1,14 @@
-kernel void mandelbrot( global int* result, const unsigned int stride, const double scale,
-const double x, const double y, const unsigned int depth ) {
-   const unsigned int id = get_global_id( 0 );
+kernel void mandelbrot( global int* result, const unsigned int depth, const double scale,
+const double x, const double y ) {
+   const size_t idx = get_global_id( 0 );
+   const size_t idy = get_global_id( 1 );
    
-   const double cx = x + ( id % stride ) * scale;
-   const double cy = y + ( id / stride ) * scale;
+   const size_t stride = get_global_size( 0 );
+   
+   const size_t id = stride * idy + idx;
+   
+   const double cx = x + idx * scale;
+   const double cy = y + idy * scale;
    
    const double cr = cx + cx;
    const double ci = cy + cy;
@@ -14,7 +19,7 @@ const double x, const double y, const unsigned int depth ) {
    double zr2 = zr * zr;
    double zi2 = zi * zi;
    
-   for ( unsigned int n = 0; n < depth; n++ ) {
+   for ( size_t n = 0; n < depth; ++n ) {
       zi = zr * zi;
       zi += zi;
       zi += ci;

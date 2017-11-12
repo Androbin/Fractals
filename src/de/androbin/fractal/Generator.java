@@ -39,9 +39,7 @@ public final class Generator {
   
   public void render( final int[] imageData, final int width, final int height,
       final Args args ) {
-    final int length = imageData.length;
-    
-    coverMemory( length );
+    coverMemory( imageData.length );
     
     final int size = Math.min( width, height );
     final double scale = 2.0 * args.scale / size;
@@ -53,14 +51,13 @@ public final class Generator {
     final CLKernel kernel = executor.kernel;
     
     kernel.setArg( 0, mem );
-    kernel.setArg( 1, width );
+    kernel.setArg( 1, args.depth );
     kernel.setArg( 2, scale );
     kernel.setArg( 3, x );
     kernel.setArg( 4, y );
-    kernel.setArg( 5, args.depth );
     
-    set.setKernelArgs( 6 );
-    executor.execute( length );
+    set.setKernelArgs( 5 );
+    executor.execute( width, height );
     
     readBuffer( mem, buffer );
     getBuffer( buffer, imageData );
