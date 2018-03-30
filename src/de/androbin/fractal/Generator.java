@@ -44,8 +44,8 @@ public final class Generator {
     final int size = Math.min( width, height );
     final double scale = 2.0 * args.scale / size;
     
-    final double x = 1.0 + args.x - args.scale - (double) width / size;
-    final double y = 1.0 + args.y - args.scale - (double) height / size;
+    final double x = args.x - args.scale + ( size - width ) * scale;
+    final double y = args.y - args.scale + ( size - height ) * scale;
     
     final CLExecutor executor = set.executor;
     final CLKernel kernel = executor.kernel;
