@@ -1,23 +1,22 @@
 package de.androbin.fractal;
 
-import static de.androbin.util.JSONUtil.*;
-import org.json.simple.*;
+import de.androbin.json.*;
 
 public final class Configuration {
-  private static final JSONObject CONFIG = (JSONObject) parseJSON( "config.json" ).get();
+  private static final XObject CONFIG = JSONUtil.readJSON( "config.json" ).get().asObject();
   
   public static final class window_ {
-    private static final JSONObject CONFIG_WINDOW = (JSONObject) CONFIG.get( "window" );
+    private static final XObject CONFIG_WINDOW = CONFIG.get( "window" ).asObject();
     
-    public static final float SCALE = ( (Number) CONFIG_WINDOW.get( "scale" ) ).floatValue();
+    public static final float SCALE = CONFIG_WINDOW.get( "scale" ).asFloat();
   }
   
   public static final class gui_ {
-    private static final JSONObject CONFIG_GUI = (JSONObject) CONFIG.get( "gui" );
+    private static final XObject CONFIG_GUI = CONFIG.get( "gui" ).asObject();
     
-    public static final int FPS = ( (Number) CONFIG_GUI.get( "fps" ) ).intValue();
-    public static final int DEPTH = ( (Number) CONFIG_GUI.get( "depth" ) ).intValue();
+    public static final int FPS = CONFIG_GUI.get( "fps" ).asInt();
+    public static final int DEPTH = CONFIG_GUI.get( "depth" ).asInt();
     
-    public static final String TITLE = (String) CONFIG_GUI.get( "title" );
+    public static final String TITLE = CONFIG_GUI.get( "title" ).asString();
   }
 }

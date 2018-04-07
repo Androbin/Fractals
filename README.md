@@ -4,6 +4,7 @@
 Dependencies:
  - App Shell
  - App Shell - AWT
+ - Functions
  - GFX
  - JSON
  - LWJGL
