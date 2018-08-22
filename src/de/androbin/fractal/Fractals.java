@@ -16,7 +16,7 @@ import java.io.*;
 import javax.swing.*;
 import org.lwjgl.*;
 
-public final class Fractals extends BasicShell implements AWTGraphics {
+public final class Fractals extends AbstractShell implements AWTGraphics {
   private final Generator generator;
   
   private final AbstractSet set;
@@ -104,7 +104,8 @@ public final class Fractals extends BasicShell implements AWTGraphics {
   }
   
   private void registerInputs() {
-    addKeyInput( new KeyInput() {
+    final Inputs inputs = getInputs();
+    inputs.keyboard = new KeyInput() {
       @ Override
       public void keyPressed( final int keycode ) {
         switch ( keycode ) {
@@ -128,14 +129,14 @@ public final class Fractals extends BasicShell implements AWTGraphics {
           animate ^= true;
         }
       }
-    } );
-    addMouseMotionInput( new MouseMotionInput() {
+    };
+    inputs.mouseMotion = new MouseMotionInput() {
       @ Override
       public void mouseMoved( final int x, final int y ) {
         mouse.setLocation( x, y );
       }
-    } );
-    addMouseWheelInput( new MouseWheelInput() {
+    };
+    inputs.mouseWheel = new MouseWheelInput() {
       @ Override
       public void mouseWheelMoved( final int x, final int y,
           final int iclicks, final float fclicks ) {
@@ -149,7 +150,7 @@ public final class Fractals extends BasicShell implements AWTGraphics {
         
         args.scale *= a;
       }
-    } );
+    };
   }
   
   @ Override
